@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import toast from "react-hot-toast";
 import api from "../configs/api";
-// import { fetchWorkspaces } from "features/workspaceSlice"
+import { fetchWorkspaces } from "../features/workspaceSlice"
 
 const AddProjectMember = ({ isDialogOpen, setIsDialogOpen }) => {
 
@@ -31,7 +31,7 @@ const AddProjectMember = ({ isDialogOpen, setIsDialogOpen }) => {
             const {data} = await api.post(`/api/projects/${project.id}/addMember`, {email}, {headers:{Authorization: `Bearer ${await getToken()}`}})
             toast.success("Added to project successfully");
             setIsDialogOpen(false);
-            // dispatch(fetchWorkspaces({getToken}))
+            dispatch(fetchWorkspaces({getToken}))
         } catch (error) {
             toast.error(error?.response?.data?.message || error.message)
         } finally {

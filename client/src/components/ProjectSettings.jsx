@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "@clerk/clerk-react"
 import toast from "react-hot-toast";
 import api from "../configs/api";
-// import { fetchWorkspaces } from "features/workspace/workspaceSlice"
+import { fetchWorkspaces } from "../features/workspaceSlice"
 
 export default function ProjectSettings({ project }) {
 
@@ -33,7 +33,7 @@ export default function ProjectSettings({ project }) {
         try {
             const {data} = await api.put('/api/projects',formData,{headers:{Authorization: `Bearer ${await getToken()}`}})
             setIsDialogOpen(false);
-            // dispatch(fetchWorkspaces({getToken}))
+            dispatch(fetchWorkspaces({getToken}))
             toast.dismiss();
             toast.success(data.message);
         } catch (error) {
