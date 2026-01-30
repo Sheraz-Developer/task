@@ -16,7 +16,12 @@ export const createProject = async (req, res) => {
         if (!workspace) {
             return res.status(404).json({ message: "Workspace not found" });
         }
-        if (!workspace.members.some((member) => member.userId === userId && member.role === 'admin')) {
+        
+        // Check if user is workspace owner or admin
+        const isOwner = workspace.ownerId === userId;
+        const isAdmin = workspace.members.some((member) => member.userId === userId && member.role === 'admin');
+        
+        if (!isOwner && !isAdmin) {
             return res.status(403).json({ message: "You don't have permission to create projects in this workspace" });
         }
 
